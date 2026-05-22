@@ -1,0 +1,18 @@
+name: GitHub Actions Core Features
+
+# manual trigger
+on: workflow_dispatch
+
+run-name: ${{ github.actor }} is learning GitHub Actions Core Features
+
+jobs:
+  greeter:
+    runs-on:
+      - ubuntu-slim
+    steps:
+      - run: echo "Running greeter script on ${{ runner.os }} with ${{ runner.arch }} architecture"
+      - uses: actions/checkout@v6
+      - name: Run greeter script
+        # run greeter.py script in root of repo
+        run: |
+          python3 greeter.py
