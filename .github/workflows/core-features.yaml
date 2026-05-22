@@ -12,7 +12,20 @@ jobs:
     steps:
       - run: echo "Running greeter script on ${{ runner.os }} with ${{ runner.arch }} architecture"
       - uses: actions/checkout@v6
+        # lots of options for checkout written in the documentation
+        # with:
+        # ref: 'branch-name' # defaults to the commit that triggered the workflow
+        # repository: 'owner/repo' # defaults to the repository of the workflow
+        # token: ${{ secrets.GITHUB_TOKEN }} # defaults to GITHUB_TOKEN secret, can be set to a PAT for more permissions
+        # fetch-depth: 0 # fetches all history for all branches and tags. Defaults to 1 which only fetches the single commit that triggered the workflow
+        # submodules: 'recursive' # also checks out submodules, can be set to true for one level of submodules
+        # persist-credentials: false # whether to persist the token in the .git/config file, defaults to true which allows subsequent git commands in the workflow to authenticate using the token
+        # clean: true # whether to run git clean after checkout, defaults to true which removes untracked files from the working directory
+        # lfs: true # whether to pull Git LFS files, defaults to false
       - name: Run greeter script
         # run greeter.py script in root of repo
         run: |
           python3 greeter.py
+      - name: Greeter inline python script
+        run: print("Hello ${{ github.actor }} from an inline python script.")
+        shell: python
