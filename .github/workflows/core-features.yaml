@@ -9,6 +9,9 @@ jobs:
   greeter:
     runs-on:
       - ubuntu-slim
+      # jobs can depend on each other using DAGS. In this case, the greeter job depends on the inline-greeter job, so it will only run after the inline-greeter job has completed successfully.
+    needs:
+      - inline-greeter
     steps:
       - run: echo "Running greeter script on ${{ runner.os }} with ${{ runner.arch }} architecture"
       - uses: actions/checkout@v6
@@ -29,3 +32,8 @@ jobs:
       - name: Greeter inline python script
         run: print("Hello ${{ github.actor }} from an inline python script.")
         shell: python
+  inline-greeter:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Greeter inline bash script
+        run: echo "Running from a DAG dependency! Hello ${{ github.actor }} from an inline bash script."
