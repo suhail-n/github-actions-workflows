@@ -1,4 +1,4 @@
-name: GitHub Actions Core Features
+name: GitHub Actions Core Features Triggers
 
 # manual trigger
 on:
