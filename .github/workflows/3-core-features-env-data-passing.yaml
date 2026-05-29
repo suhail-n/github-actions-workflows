@@ -15,7 +15,18 @@ jobs:
     runs-on: ubuntu-slim
     env:
       JOB_VAR: I_AM_JOB_1_SCOPED
+    # This makes the value of foo available to other jobs as needs.producer.outputs.foo
+    outputs:
+      foo: ${{ steps.generate-foo.outputs.foo }}
     steps:
+      - name: Generate and export foo
+        id: generate-foo
+        run: |
+          foo=bar
+          # 1) Step output (for job output)
+          echo "foo=${foo} >> $GITHUB_OUTPUT"
+          # 2) Job-scoped environment variable
+          echo "FOO=${foo}" >> "$GITHUB_ENV"
       - name: Print environment variables in job1 step 2
         env:
           # env only for this step
@@ -31,8 +42,14 @@ jobs:
           echo "STEP_VAR: ${STEP_VAR:-<UNSET>}" # not visible
   job2:
     runs-on: ubuntu-slim
+    # need job1 to first pass data into outputs
+    needs: job1
     steps:
       - name: Print environment variables in job2
         run: |
           echo "WORKFLOW_VAR: $WORKFLOW_VAR" # visible
           echo "JOB_VAR: ${JOB_VAR:-<UNSET>}" # not visible
+      - name: Inspect values inside job1 (note FOO is unset)
+        run: |
+          echo "Value from job1:        ${{ needs.job1.outputs.foo }}"
+          echo "FOO in job2:            ${FOO:-<UNSET>}"
