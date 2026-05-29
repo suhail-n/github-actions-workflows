@@ -35,4 +35,4 @@ jobs:
       - name: Print environment variables in job2
         run: |
           echo "WORKFLOW_VAR: $WORKFLOW_VAR" # visible
-          echo "JOB_VAR: ${JOB_VAR:<UNSET>}" # not visible
+          echo "JOB_VAR: ${JOB_VAR:-<UNSET>}" # not visible
