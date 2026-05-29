@@ -1,0 +1,28 @@
+name: GitHub Actions Core Features
+
+# manual trigger
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - "feature/*"
+      - "release/*"
+    paths:
+      # any python file in any directory
+      - "**/*.py"
+      # any file in the docs directory
+      - "docs/**"
+      # exclude files with -test in the docs directory
+      - "!docs/**/*-test*"
+
+run-name: ${{ github.actor }} is learning GitHub Actions Core Features
+
+jobs:
+  pr-trigger-job:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Dump full event JSON
+        run: |
+          echo "=== $GITHUB_EVENT_NAME payload ==="
+          cat "$GITHUB_EVENT_PATH"
