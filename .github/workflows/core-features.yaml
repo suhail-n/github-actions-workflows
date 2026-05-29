@@ -4,6 +4,18 @@ name: GitHub Actions Core Features
 on:
   workflow_dispatch:
   create:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - "feature/*"
+      - "release/*"
+    paths:
+      # any python file in any directory
+      - "**/*.py"
+      # any file in the docs directory
+      - "docs/**"
+      # exclude files with -test in the docs directory
+      - "!docs/**/*-test*"
 
 run-name: ${{ github.actor }} is learning GitHub Actions Core Features
 
