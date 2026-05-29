@@ -19,6 +19,8 @@ run-name: ${{ github.actor }} is learning GitHub Actions Core Features
 
 jobs:
   pr-trigger-job:
+    # only trigger if the branch starts with release/ or feature/
+    if: startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'feature/')
     runs-on: ubuntu-slim
     steps:
       - name: Dump full event JSON
