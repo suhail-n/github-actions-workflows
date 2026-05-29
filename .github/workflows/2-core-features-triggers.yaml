@@ -6,8 +6,8 @@ on:
   pull_request:
     types: [opened, reopened]
     branches:
-      - "feature/*"
-      - "release/*"
+      - "feature/**"
+      - "release/**"
     paths:
       # any python file in any directory
       - "**/*.py"
