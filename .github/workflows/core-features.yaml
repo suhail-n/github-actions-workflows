@@ -1,7 +1,9 @@
 name: GitHub Actions Core Features
 
 # manual trigger
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  create:
 
 run-name: ${{ github.actor }} is learning GitHub Actions Core Features
 
