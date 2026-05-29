@@ -1,0 +1,38 @@
+name: GitHub Actions Core Features Environments and Data Passing
+
+# manual trigger
+on:
+  workflow_dispatch:
+run-name: ${{ github.actor }} is learning GitHub Actions Core Features Environments and Data Passing
+
+# environment variable across the entire workflow.
+env:
+  WORKFLOW_VAR: I_AM_WORKFLOW_SCOPED
+
+jobs:
+  job1:
+    # only trigger if the branch starts with release/ or feature/
+    runs-on: ubuntu-slim
+    env:
+      JOB_VAR: I_AM_JOB_1_SCOPED
+    steps:
+      - name: Print environment variables in job1 step 2
+        env:
+          # env only for this step
+          STEP_VAR: I_AM_STEP_SCOPED
+        run: |
+          echo "WORKFLOW_VAR: $WORKFLOW_VAR" # visible
+          echo "STEP_VAR: $STEP_VAR" # visible
+          echo "JOB_VAR: $JOB_VAR" # visible
+      - name: Print environment variables in job 1 step 2
+        run: |
+          echo "WORKFLOW_VAR: $WORKFLOW_VAR" # visible
+          echo "JOB_VAR: $JOB_VAR" # visible
+          echo "STEP_VAR: ${STEP_VAR:<UNSET>}" # not visible
+  job2:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Print environment variables in job2
+        run: |
+          echo "WORKFLOW_VAR: $WORKFLOW_VAR" # visible
+          echo "JOB_VAR: ${JOB_VAR:<UNSET>}" # not visible
