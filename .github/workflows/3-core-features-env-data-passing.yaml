@@ -38,6 +38,7 @@ jobs:
         run: |
           echo "WORKFLOW_VAR: $WORKFLOW_VAR" # visible
           echo "JOB_VAR: $JOB_VAR" # visible
+          echo "FOO: $FOO" # visible JOB Scoped ENV variable
           echo "STEP_VAR: ${STEP_VAR:-<UNSET>}" # not visible
   job2:
     runs-on: ubuntu-slim
