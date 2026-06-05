@@ -11,11 +11,10 @@ env:
 
 jobs:
   job1:
-    # only trigger if the branch starts with release/ or feature/
     runs-on: ubuntu-slim
     env:
       JOB_VAR: I_AM_JOB_1_SCOPED
-    # This makes the value of foo available to other jobs as needs.producer.outputs.foo
+    # This makes the value of foo available to other jobs as needs.job1.outputs.foo
     outputs:
       foo: ${{ steps.generate-foo.outputs.foo }}
     steps:
